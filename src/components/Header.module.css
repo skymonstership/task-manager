@@ -1,0 +1,9 @@
+.heading {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--text-strong);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--space-2);
+}

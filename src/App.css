@@ -1,0 +1,15 @@
+#root {
+  max-width: 960px;
+  margin-inline: auto;
+  padding: 1.5rem 1rem;
+}
+
+/* page and card containers */
+.page, .panel, .add-task-form {
+  margin-inline: auto;
+}
+
+/* center row controls when needed */
+.filter-bar, .button-group {
+  justify-content: center;
+}

@@ -52,7 +52,7 @@ export function TaskProvider({ children }) {
   const updateTask = async (taskId, updates) => {
     try {
       const response = await fetch(`${API_BASE}/tasks/${taskId}`, {
-        method: "PATCH",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updates),
       });
@@ -101,7 +101,7 @@ export function TaskProvider({ children }) {
       await Promise.all(
         tasksWithOrder.map((task) =>
           fetch(`${API_BASE}/tasks/${task.id}`, {
-            method: "PATCH",
+            method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ order: task.order }),
           })

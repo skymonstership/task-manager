@@ -5,7 +5,7 @@ import TaskListPage from './pages/TaskListPage';
 import TaskDetailPage from './pages/TaskDetailPage';
 import "./App.css";
 
-export const API_BASE = "https://taskflow-api-production-72ab.up.railway.app";
+export const API_BASE = "https://taskflow-api-production-72ab.up.railway.app/api";
 
 export default function App() {
   return (

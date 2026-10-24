@@ -113,7 +113,8 @@ export function TaskProvider({ children }) {
   };
 
   const filteredTasks = tasks
-    .filter((task) => task.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    // .filter((task) => task.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter((task) => (task.title || "").toLowerCase().includes(searchTerm.toLowerCase()))
     .filter((task) => filter === "all" || task.status === filter);
 
   return (

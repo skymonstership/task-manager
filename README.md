@@ -75,6 +75,15 @@ npm run server
 
 ## Step 3: Understand the Project Structure
 
+### Deploying to Netlify
+
+Use `npm run build` as the build command and `dist` as the publish directory.
+The SPA rewrite in `public/_redirects` is copied into `dist` by Vite so that
+direct visits and refreshes at `/tasks` and `/tasks/:id` serve `index.html`
+and let React Router render the correct page instead of returning a Netlify 404.
+Redeploy after changing this rule. For manual deployments, upload the entire
+`dist` directory, including `_redirects`.
+
 ```
 task-manager/
 ├── data/

@@ -23,7 +23,10 @@ export function TaskProvider({ children }) {
         const response = await fetch(`${API_BASE}/tasks`);
         if (!response.ok) throw new Error(`Server error: ${response.status}`);
         const data = await response.json();
-        dispatch({ type: "FETCH_SUCCESS", payload: data });
+        const orderedTasks = [...data].sort(
+          (a, b) => (a.order ?? 0) - (b.order ?? 0)
+        );
+        dispatch({ type: "FETCH_SUCCESS", payload: orderedTasks });
       } catch (err) {
         dispatch({ type: "FETCH_ERROR", payload: err.message });
       }
@@ -51,10 +54,12 @@ export function TaskProvider({ children }) {
 
   const updateTask = async (taskId, updates) => {
     try {
+      const task = tasks.find((task) => String(task.id) === String(taskId));
+      if (!task) throw new Error("Task not found");
       const response = await fetch(`${API_BASE}/tasks/${taskId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updates),
+        body: JSON.stringify({ ...task, ...updates }),
       });
       if (!response.ok) throw new Error(`Server error: ${response.status}`);
       const updated = await response.json();
@@ -99,13 +104,14 @@ export function TaskProvider({ children }) {
 
     try {
       await Promise.all(
-        tasksWithOrder.map((task) =>
-          fetch(`${API_BASE}/tasks/${task.id}`, {
+        tasksWithOrder.map(async (task) => {
+          const response = await fetch(`${API_BASE}/tasks/${task.id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ order: task.order }),
-          })
-        )
+            body: JSON.stringify(task),
+          });
+          if (!response.ok) throw new Error(`Server error: ${response.status}`);
+        })
       );
     } catch (err) {
       alert(`Failed to save task order: ${err.message}`);

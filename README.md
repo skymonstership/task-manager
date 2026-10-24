@@ -116,9 +116,13 @@ The screenshot below displays the main task list page, active status filter, tas
 
 - Task Count Summary: Displayed a dynamic summary above the list showing "Showing X of Y tasks".  
 - Form Validation: Disabled the Add Task form's submit button while any required field is empty.  
-- State Persistence: Persisted tasks in localStorage so they survive page reloads using a lazy useState initializer in TaskContext.  
+- State Persistence: Tasks are saved through the API and fetched again on page reload, sorted by their saved `order`. Updates and drag-and-drop saves send the full task because `PUT` can replace the existing record.
 - Task Updates: Added an UPDATE_TASK action and an inline edit form on the detail page.  
 - Drag-and-Drop Reordering: Added drag-and-drop reordering of tasks in the list using only native browser drag events (no library)
+
+If tasks were already saved with missing fields by an older deployment, edit or
+recreate them after redeploying. Refreshing cannot restore fields already
+overwritten in the API.
 
 ## 🤖 AI and Tools Usage Note
 

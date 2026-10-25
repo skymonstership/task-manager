@@ -27,13 +27,16 @@ export function taskReducer(state, action) {
       return {
         ...state,
         tasks: state.tasks.map((t) =>
-          t.id === action.payload.id ? action.payload : t
+          // String(t.id) === String(action.payload.id) ? action.payload : t
+          String(t.id) === String(action.payload.id)
+            ? { ...t, ...action.payload }
+            : t
         ),
       };
     case "DELETE_TASK":
       return {
         ...state,
-        tasks: state.tasks.filter((t) => t.id !== action.payload),
+        tasks: state.tasks.filter((t) => String(t.id) !== String(action.payload)),
       };
     case "REORDER_TASKS":
       return {

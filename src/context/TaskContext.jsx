@@ -63,12 +63,22 @@ export function TaskProvider({ children }) {
       });
       if (!response.ok) throw new Error(`Server error: ${response.status}`);
       const updated = await response.json();
-      dispatch({ type: "UPDATE_TASK", payload: updated });
+      // dispatch({ type: "UPDATE_TASK", payload: updated });
+      dispatch({
+        type: "UPDATE_TASK",
+        // payload: { ...updated, id: String(updated.id) } });
+        payload: {
+          ...task,
+          ...updates,
+          ...updated,
+          id: task.id,
+        },
+      });
     } catch (err) {
       alert(`Failed to update task: ${err.message}`);
     }
   };
-  
+
   const deleteTask = async (taskId) => {
     if (!window.confirm("Are you sure you want to delete this task?"))
       return;

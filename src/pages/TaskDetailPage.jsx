@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTasks } from '../context/TaskContext';
 import styles from "./TaskDetailPage.module.css";
-import { API_BASE } from "../App";
 
 
 export default function TaskDetailPage() {

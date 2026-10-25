@@ -6,7 +6,7 @@ import {
   useContext,
 } from "react";
 import { taskReducer, initialState } from '../reducer/taskReducer';
-import { API_BASE } from "../App";
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 export const TaskContext = createContext();
 
@@ -63,10 +63,8 @@ export function TaskProvider({ children }) {
       });
       if (!response.ok) throw new Error(`Server error: ${response.status}`);
       const updated = await response.json();
-      // dispatch({ type: "UPDATE_TASK", payload: updated });
       dispatch({
         type: "UPDATE_TASK",
-        // payload: { ...updated, id: String(updated.id) } });
         payload: {
           ...task,
           ...updates,

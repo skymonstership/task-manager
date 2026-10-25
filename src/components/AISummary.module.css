@@ -1,16 +1,13 @@
-.summaryCard {
+.container {
   margin-top: var(--space-6);
   margin-bottom: var(--space-6);
-  padding: var(--space-4);
-  background: var(--bg-surface, #ffffff);
-  border: 1px solid var(--border-subtle, #e2e8f0);
-  border-radius: var(--radius-md);
 }
 
 .summaryHeader {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+  gap: var(--space-3);
   margin-bottom: var(--space-3);
 }
 
@@ -22,7 +19,7 @@
 }
 
 .refreshButton {
-  padding: var(--space-2) var(--space-4);
+  padding: var(--space-1) var(--space-3);
   background: var(--action-primary);
   color: var(--text-on-primary);
   border: none;
@@ -39,20 +36,25 @@
   cursor: not-allowed;
 }
 
+.summaryBox {
+  padding: var(--space-4);
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-md);
+  min-height: 80px;
+}
+
 .summaryContent {
-  padding: var(--space-3);
-  background: var(--bg-muted, #f8fafc);
-  border-radius: var(--radius-sm, 6px);
   font-size: var(--text-sm);
   color: var(--text-strong);
-  line-height: 1.5;
-  white-space: pre-wrap; /* 保证后端的换行符正常回车换行 */
+  line-height: 1.6;
+  white-space: pre-wrap; 
 }
 
 .summaryError {
   color: var(--text-danger, #ef4444);
   font-size: var(--text-sm);
-  margin-top: var(--space-2);
+  margin: 0;
 }
 
 .summaryEmpty {

@@ -15,6 +15,24 @@ export function TaskProvider({ children }) {
   const { tasks, loading, error, submitting } = state;
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("all");
+  const [summary, setSummary] = useState("");
+  const [summaryLoading, setSummaryLoading] = useState(false);
+  const [summaryError, setSummaryError] = useState(null);
+
+  const fetchSummary = async () => {
+    setSummaryLoading(true);
+    setSummaryError(null);
+    try {
+      const response = await fetch(`${API_BASE}/tasks/summary`);
+      if (!response.ok) throw new Error(`Server error: ${response.status}`);
+      const textData = await response.text();
+      setSummary(textData);
+    } catch (err) {
+      setSummaryError(err.message);
+    } finally {
+      setSummaryLoading(false);
+    }
+  };
 
   useEffect(() => {
     const loadTasks = async () => {
@@ -32,6 +50,7 @@ export function TaskProvider({ children }) {
       }
     };
     loadTasks();
+    fetchSummary();
   }, []);
 
   const addTask = async (taskData) => {
@@ -45,6 +64,7 @@ export function TaskProvider({ children }) {
       if (!response.ok) throw new Error(`Server error: ${response.status}`);
       const createdTask = await response.json();
       dispatch({ type: "ADD_TASK", payload: createdTask });
+      fetchSummary();
       return createdTask;
     } catch (err) {
       dispatch({ type: "ADD_ERROR" });
@@ -72,6 +92,7 @@ export function TaskProvider({ children }) {
           id: task.id,
         },
       });
+      fetchSummary();
     } catch (err) {
       alert(`Failed to update task: ${err.message}`);
     }
@@ -86,6 +107,7 @@ export function TaskProvider({ children }) {
       });
       if (!response.ok) throw new Error(`Server error: ${response.status}`);
       dispatch({ type: "DELETE_TASK", payload: taskId });
+      fetchSummary();
     } catch (err) {
       alert(`Failed to delete task: ${err.message}`);
     }
@@ -141,7 +163,11 @@ export function TaskProvider({ children }) {
         submitting,
         searchTerm,
         filter,
+        summary,
+        summaryLoading,
+        summaryError,
         addTask,
+        fetchSummary,
         updateTask,
         deleteTask,
         reorderTasks,

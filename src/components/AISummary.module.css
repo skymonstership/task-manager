@@ -1,0 +1,62 @@
+.summaryCard {
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-6);
+  padding: var(--space-4);
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-md);
+}
+
+.summaryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+
+.summaryTitle {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--text-strong);
+  margin: 0;
+}
+
+.refreshButton {
+  padding: var(--space-2) var(--space-4);
+  background: var(--action-primary);
+  color: var(--text-on-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-standard), opacity var(--duration-fast);
+}
+
+.refreshButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.summaryContent {
+  padding: var(--space-3);
+  background: var(--bg-muted, #f8fafc);
+  border-radius: var(--radius-sm, 6px);
+  font-size: var(--text-sm);
+  color: var(--text-strong);
+  line-height: 1.5;
+  white-space: pre-wrap; /* 保证后端的换行符正常回车换行 */
+}
+
+.summaryError {
+  color: var(--text-danger, #ef4444);
+  font-size: var(--text-sm);
+  margin-top: var(--space-2);
+}
+
+.summaryEmpty {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  margin: 0;
+}

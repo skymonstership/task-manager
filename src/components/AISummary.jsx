@@ -31,7 +31,12 @@ export default function AISummary() {
 
                 {summary ? (
                     <div className={styles.summaryContent}>
-                        {summary}
+                        {typeof summary === 'object' ? summary?.summaryText : summary}
+                        {formattedTime && (
+                            <span className={styles.timestamp}>
+                                Generated at: {formattedTime}
+                            </span>
+                        )}
                     </div>
                 ) : (
                     !summaryLoading && (

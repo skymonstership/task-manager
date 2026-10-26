@@ -3,6 +3,11 @@ import styles from './AISummary.module.css';
 
 export default function AISummary() {
     const { summary, summaryLoading, summaryError, fetchSummary } = useTasks();
+    const summaryText = typeof summary === 'object' ? summary?.summaryText : summary;
+    const generatedAt = typeof summary === 'object' ? summary?.generatedAt : null;
+    const formattedTime = generatedAt
+        ? new Date(generatedAt).toLocaleString()
+        : null;
 
     return (
         <section className={styles.container}>

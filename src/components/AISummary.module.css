@@ -62,3 +62,11 @@
   font-size: var(--text-sm);
   margin: 0;
 }
+
+.timestamp {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: #6b7280;
+    text-align: right;
+}

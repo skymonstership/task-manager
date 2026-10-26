@@ -15,9 +15,24 @@ export function TaskProvider({ children }) {
   const { tasks, loading, error, submitting } = state;
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("all");
-  const [summary, setSummary] = useState("");
+  const [summary, setSummary] = useState(null);
   const [summaryLoading, setSummaryLoading] = useState(false);
   const [summaryError, setSummaryError] = useState(null);
+
+  const fetchCachedSummary = async () => {
+    setSummaryLoading(true);
+    setSummaryError(null);
+    try {
+      const response = await fetch(`${API_BASE}/tasks/summary/cached`);
+      if (!response.ok) throw new Error(`Server error: ${response.status}`);
+      const data = await response.json(); 
+      setSummary(data);
+    } catch (err) {
+      setSummaryError(err.message);
+    } finally {
+      setSummaryLoading(false);
+    }
+  };
 
   const fetchSummary = async () => {
     setSummaryLoading(true);
@@ -25,8 +40,8 @@ export function TaskProvider({ children }) {
     try {
       const response = await fetch(`${API_BASE}/tasks/summary`);
       if (!response.ok) throw new Error(`Server error: ${response.status}`);
-      const textData = await response.text();
-      setSummary(textData);
+      const data = await response.json();
+      setSummary(data);
     } catch (err) {
       setSummaryError(err.message);
     } finally {
@@ -50,7 +65,7 @@ export function TaskProvider({ children }) {
       }
     };
     loadTasks();
-    fetchSummary();
+    fetchCachedSummary();
   }, []);
 
   const addTask = async (taskData) => {
@@ -168,6 +183,7 @@ export function TaskProvider({ children }) {
         summaryError,
         addTask,
         fetchSummary,
+        fetchCachedSummary,
         updateTask,
         deleteTask,
         reorderTasks,

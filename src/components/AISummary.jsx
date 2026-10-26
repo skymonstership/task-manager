@@ -5,9 +5,15 @@ export default function AISummary() {
     const { summary, summaryLoading, summaryError, fetchSummary } = useTasks();
     const summaryText = typeof summary === 'object' ? summary?.summaryText : summary;
     const generatedAt = typeof summary === 'object' ? summary?.generatedAt : null;
-    const formattedTime = generatedAt
-        ? new Date(generatedAt).toLocaleString()
-        : null;
+    const formatTimeToLocal = (isoString) => {
+        if (!isoString) return null;
+        // 如果没有 Z 或 + 时区标识，手动追加 Z
+        const utcString = (isoString.endsWith('Z') || isoString.includes('+'))
+            ? isoString
+            : `${isoString}Z`;
+        return new Date(utcString).toLocaleString();
+    };
+    const formattedTime = formatTimeToLocal(generatedAt);
 
     return (
         <section className={styles.container}>
